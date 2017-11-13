@@ -1,5 +1,5 @@
 {
-   "abstract" : "Mojo::Collection methods using List::UtilsBy",
+   "abstract" : "List::UtilsBy methods for Mojo::Collection",
    "author" : [
       "Dan Book <dbook@cpan.org>"
    ],
@@ -64,6 +64,15 @@
    },
    "release_status" : "stable",
    "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Grinnz/Mojo-Collection-Role-UtilsBy/issues"
+      },
+      "homepage" : "https://github.com/Grinnz/Mojo-Collection-Role-UtilsBy",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/Grinnz/Mojo-Collection-Role-UtilsBy.git",
+         "web" : "https://github.com/Grinnz/Mojo-Collection-Role-UtilsBy"
+      },
       "x_IRC" : "irc://irc.perl.org/#mojo"
    },
    "version" : "0.001",

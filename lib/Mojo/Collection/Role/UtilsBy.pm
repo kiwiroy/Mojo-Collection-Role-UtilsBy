@@ -5,11 +5,9 @@ use List::UtilsBy ();
 
 our $VERSION = '0.001';
 
-my %functions_list = map { ($_ => 1) }
-  qw(sort_by nsort_by rev_sort_by rev_nsort_by uniq_by extract_by
-     weighted_shuffle_by bundle_by);
-my %functions_scalar = map { ($_ => 1) }
-  qw(max_by min_by extract_first_by);
+my %functions_list = map { ($_ => 1) } qw(bundle_by extract_by nsort_by
+  rev_nsort_by rev_sort_by sort_by uniq_by weighted_shuffle_by);
+my %functions_scalar = map { ($_ => 1) } qw(extract_first_by max_by min_by);
 
 foreach my $func (keys %functions_list, keys %functions_scalar) {
   my $sub = List::UtilsBy->can($func) // die "Function List::UtilsBy::$func not found";
@@ -57,54 +55,12 @@ L<List::UtilsBy>.
 
 L<Mojo::Collection::Role::UtilsBy> composes the following methods.
 
-=head2 sort_by
+=head2 bundle_by
 
-  my $sorted_collection = $c->sort_by(sub { $_->name });
+  my $bundled_collection = $c->bundle_by(sub { [@_] }, $n);
 
-Return a new collection containing the elements sorted lexically with
-L<List::UtilsBy/"sort_by">.
-
-=head2 nsort_by
-
-  my $sorted_collection = $c->sort_by(sub { $_->num });
-
-Return a new collection containing the elements sorted numerically with
-L<List::UtilsBy/"nsort_by">.
-
-=head2 rev_sort_by
-
-  my $sorted_collection = $c->rev_sort_by(sub { $_->name });
-
-Return a new collection containing the elements sorted lexically in reverse
-with L<List::UtilsBy/"rev_sort_by">.
-
-=head2 rev_nsort_by
-
-  my $sorted_collection = $c->rev_nsort_by(sub { $_->num });
-
-Return a new collection containing the elements sorted numerically in reverse
-with L<List::UtilsBy/"rev_nsort_by">.
-
-=head2 max_by
-
-  my $max_element = $c->max_by(sub { $_->num });
-
-Return the element from the collection that returns the numerically largest
-result from the passed function with L<List::UtilsBy/"max_by">.
-
-=head2 min_by
-
-  my $min_element = $c->min_by(sub { $_->num });
-
-Return the element from the collection that returns the numerically smallest
-result from the passed function with L<List::UtilsBy/"min_by">.
-
-=head2 uniq_by
-
-  my $uniq_collection = $c->uniq_by(sub { $_->name });
-
-Return a new collection containing the elements that return stringwise unique
-values from the passed function with L<List::UtilsBy/"uniq_by">.
+Return a new collection containing the results from the passed function, given
+input elements in bundles of (up to) C<$n>, using L<List::UtilsBy/"bundle_by">.
 
 =head2 extract_by
 
@@ -121,19 +77,61 @@ removed elements.
 Remove and return the first element from the collection that returns true from
 the passed function using L<List::UtilsBy/"extract_first_by">.
 
+=head2 max_by
+
+  my $max_element = $c->max_by(sub { $_->num });
+
+Return the element from the collection that returns the numerically largest
+result from the passed function with L<List::UtilsBy/"max_by">.
+
+=head2 min_by
+
+  my $min_element = $c->min_by(sub { $_->num });
+
+Return the element from the collection that returns the numerically smallest
+result from the passed function with L<List::UtilsBy/"min_by">.
+
+=head2 nsort_by
+
+  my $sorted_collection = $c->nsort_by(sub { $_->num });
+
+Return a new collection containing the elements sorted numerically with
+L<List::UtilsBy/"nsort_by">.
+
+=head2 rev_nsort_by
+
+  my $sorted_collection = $c->rev_nsort_by(sub { $_->num });
+
+Return a new collection containing the elements sorted numerically in reverse
+with L<List::UtilsBy/"rev_nsort_by">.
+
+=head2 rev_sort_by
+
+  my $sorted_collection = $c->rev_sort_by(sub { $_->name });
+
+Return a new collection containing the elements sorted lexically in reverse
+with L<List::UtilsBy/"rev_sort_by">.
+
+=head2 sort_by
+
+  my $sorted_collection = $c->sort_by(sub { $_->name });
+
+Return a new collection containing the elements sorted lexically with
+L<List::UtilsBy/"sort_by">.
+
+=head2 uniq_by
+
+  my $uniq_collection = $c->uniq_by(sub { $_->name });
+
+Return a new collection containing the elements that return stringwise unique
+values from the passed function with L<List::UtilsBy/"uniq_by">.
+
 =head2 weighted_shuffle_by
 
   my $shuffled_collection = $c->weighted_shuffle_by(sub { $_->num });
 
 Return a new collection containing the elements shuffled with weighting
 using L<List::UtilsBy/"weighted_shuffle_by">.
-
-=head2 bundle_by
-
-  my $bundled_collection = $c->bundle_by(sub { [@_] }, $n);
-
-Return a new collection containing the results from the passed function, given
-input elements in bundles of (up to) C<$n>, using L<List::UtilsBy/"bundle_by">.
 
 =head1 BUGS
 

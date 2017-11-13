@@ -79,7 +79,7 @@ EOW
       "configure_requires" => {
         "Module::Build::Tiny" => "0.034"
       },
-      "dist_abstract" => "Mojo::Collection methods using List::UtilsBy",
+      "dist_abstract" => "List::UtilsBy methods for Mojo::Collection",
       "dist_author" => [
         "Dan Book <dbook\@cpan.org>"
       ],
