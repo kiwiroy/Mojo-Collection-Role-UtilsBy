@@ -16,15 +16,18 @@ foreach my $func (keys %functions_list, keys %functions_scalar) {
     *$func = sub {
       my ($self, @args) = @_;
       my $class = ref $self;
-      return $class->new($sub->(@args, \@$self)) if $func eq 'extract_by';
-      return $class->new($sub->(@args, @$self));
+      local $_ = $class->new(@args);
+      return $class->new($sub->($_, \@$self)) if $func eq 'extract_by';
+      return $class->new($sub->($_, @$self));
     };
   } else {
     no strict 'refs';
     *$func = sub {
       my ($self, @args) = @_;
-      return scalar $sub->(@args, \@$self) if $func eq 'extract_first_by';
-      return scalar $sub->(@args, @$self);
+      my $class = ref $self;
+      local $_ = $class->new(@args);
+      return scalar $sub->($_, \@$self) if $func eq 'extract_first_by';
+      return scalar $sub->($_, @$self);
     };
   }
 }
