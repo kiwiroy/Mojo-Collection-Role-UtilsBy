@@ -1,41 +1,8 @@
-package Mojo::Collection::Role::UtilsBy;
-
-use Role::Tiny;
-use List::UtilsBy ();
-
-our $VERSION = '0.001';
-
-my %functions_list = map { ($_ => 1) }
-  qw(sort_by nsort_by rev_sort_by rev_nsort_by uniq_by extract_by
-     weighted_shuffle_by bundle_by);
-my %functions_scalar = map { ($_ => 1) }
-  qw(max_by min_by extract_first_by);
-
-foreach my $func (keys %functions_list, keys %functions_scalar) {
-  my $sub = List::UtilsBy->can($func) // die "Function List::UtilsBy::$func not found";
-  if ($functions_list{$func}) {
-    no strict 'refs';
-    *$func = sub {
-      my ($self, @args) = @_;
-      my $class = ref $self;
-      return $class->new($sub->(@args, \@$self)) if $func eq 'extract_by';
-      return $class->new($sub->(@args, @$self));
-    };
-  } else {
-    no strict 'refs';
-    *$func = sub {
-      my ($self, @args) = @_;
-      return scalar $sub->(@args, \@$self) if $func eq 'extract_first_by';
-      return scalar $sub->(@args, @$self);
-    };
-  }
-}
-
-1;
+=pod
 
 =head1 NAME
 
-Mojo::Collection::Role::UtilsBy - List::UtilsBy methods for Mojo::Collection
+Mojo::Collection::Role::UtilsBy - Mojo::Collection methods using List::UtilsBy
 
 =head1 SYNOPSIS
 
@@ -154,3 +121,5 @@ This is free software, licensed under:
 =head1 SEE ALSO
 
 L<Mojo::Collection>, L<List::UtilsBy>
+
+=cut
